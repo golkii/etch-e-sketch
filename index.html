@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Etch-e-sketch</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <script>
+      const body = document.querySelector('body');
+      const button = document.createElement('button');
+      const clearBtn = document.createElement('button');
+      const container = document.createElement('div');
+
+
+      button.textContent = 'change grid';
+      button.style.display = 'inline';
+      button.style.margin = '5px';
+      body.appendChild(button);
+
+      clearBtn.textContent = 'clear';
+      clearBtn.style.display = 'inline';
+      clearBtn.style.margin = '5px';
+      body.appendChild(clearBtn);
+
+      button.addEventListener('click', function(e){
+        let grid = parseInt(prompt('Type new size', 16));
+        createGrid(grid);
+      });
+
+      clearBtn.addEventListener('click', function(e){
+        let pix = document.querySelectorAll('div.pix');
+        pix.forEach(element => element.style['background-color'] = 'white');
+      });
+
+      createGrid(16);
+
+      container.style.border = '2px solid black';
+      container.style.display = 'flex';
+      container.style['flex-direction'] = 'column';
+      container.style.width = '800px';
+      container.style.height = '800px';
+      container.classList.add('container');
+
+      body.appendChild(container);
+
+      function createGrid(size = 16) {
+        let children = document.querySelectorAll('.line');
+        children.forEach(function(element){
+          container.removeChild(element);
+        });
+        for (let i = 0; i < size; i++) {
+          let div = document.createElement('div');
+          
+          //div.style.border = '1px solid red';
+          div.style.display = 'flex';
+          div.style.flex = '1 1 auto';
+          div.classList.add('line');
+
+          container.appendChild(div);
+          for (let j = 0; j < size; j++) {
+            const divChild = document.createElement('div');
+
+            //divChild.style.border = '1px solid blue';
+            //divChild.style.width = '10px';
+            //divChild.style.height = '10px';
+            divChild.style.display = 'inline-block';
+            divChild.classList.add('pix');
+            divChild.style.flex = '1 1 auto';
+            
+            divChild.addEventListener('mouseover', function(e) {
+              e.target.style['background-color'] = 'grey';
+            });
+
+            /*divChild.addEventListener('mouseout', function(e) {
+              e.target.style['background-color'] = 'white';
+            });*/
+          
+            div.appendChild(divChild);
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
